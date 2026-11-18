@@ -21,4 +21,5 @@ PASO_SESGO = 0.1
 SENSIBILIDAD_ROTACION = 0.5
 
 #HOLA
-#MUNDOkhfkdhfd
+
+#Algo random
