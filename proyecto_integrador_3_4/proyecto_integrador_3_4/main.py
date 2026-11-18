@@ -4,6 +4,13 @@
 
 # 1. Bibliotecas
 # ============================================================
+
+
+
+
+
+
+#fdakjfbdkfjbdfkjbfd
 import pygame
 
 from pygame.locals import DOUBLEBUF, OPENGL
