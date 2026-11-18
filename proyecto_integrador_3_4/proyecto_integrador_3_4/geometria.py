@@ -1,7 +1,9 @@
+# Bibliotecas
+# ============================================================
 import math
 import numpy as np
 
-# 3. Generacion de geometria
+# Generacion de geometria
 # ============================================================
 def esfera_3d(radio, anillos, segmentos):
     """Genera vertices, normales y triangulos de una esfera."""

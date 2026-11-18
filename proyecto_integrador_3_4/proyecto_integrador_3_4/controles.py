@@ -1,3 +1,5 @@
+# Bibliotecas
+# ============================================================
 import pygame
 import configuraciones as config
 

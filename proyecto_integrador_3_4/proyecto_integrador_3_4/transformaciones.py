@@ -1,3 +1,5 @@
+# Biblioteca
+# ============================================================
 from OpenGL.GL import *
 
 def aplicar_transformaciones(desplazamiento, rotacion, escala, sesgo):
