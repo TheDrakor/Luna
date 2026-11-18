@@ -1,3 +1,6 @@
+# Bibliotecas
+# ============================================================
+
 import pygame
 
 from pygame.locals import DOUBLEBUF, OPENGL
@@ -10,7 +13,7 @@ import renderizado as render
 import controles
 
 
-# 6. Programa principal
+# Programa principal
 # ============================================================
 def main():
     pygame.init()
@@ -78,7 +81,7 @@ def main():
     pygame.quit()
 
 
-# 7. Inicio del programa
+# Inicio del programa
 # ============================================================
 if __name__ == "__main__":
     main()
