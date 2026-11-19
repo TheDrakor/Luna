@@ -1,6 +1,5 @@
 # Bibliotecas
 # ============================================================
-
 import pygame
 
 from pygame.locals import DOUBLEBUF, OPENGL
