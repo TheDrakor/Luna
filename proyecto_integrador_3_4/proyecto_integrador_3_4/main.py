@@ -1,10 +1,8 @@
 # Bibliotecas
 # ============================================================
 import pygame
-
 from pygame.locals import DOUBLEBUF, OPENGL
 from OpenGL.GL import *
-
 import configuraciones as config
 from geometria import preparar_geometria
 from transformaciones import aplicar_transformaciones
@@ -20,11 +18,13 @@ def main():
     pygame.display.set_caption("Luna 3D - Solido e iluminacion")
     render.configurar_opengl()
 
+    textura_luna = render.cargar_textura("luna.jpg")
+
     # Creamos por separado la geometria de la Luna y del Sol
-    vertices_luna, normales_luna, caras_luna = preparar_geometria(
+    vertices_luna, normales_luna, uvs_luna, caras_luna = preparar_geometria(
         config.RADIO_LUNA, config.ANILLOS_LUNA, config.SEGMENTOS_LUNA
     )
-    vertices_sol, normales_sol, caras_sol = preparar_geometria(
+    vertices_sol, normales_sol, _, caras_sol = preparar_geometria(
         config.RADIO_SOL, config.ANILLOS_SOL, config.SEGMENTOS_SOL
     )
 
@@ -68,7 +68,9 @@ def main():
             estado_luna["factor_escala"],
             (estado_luna["sesgo_x"], estado_luna["sesgo_y"]),
         )
-        render.dibujar_luna(vertices_luna, normales_luna, caras_luna)
+        render.dibujar_luna(
+            vertices_luna, normales_luna, uvs_luna, caras_luna, textura_luna
+        )
         glPopMatrix()
 
         # El Sol se dibuja aparte y no sigue los movimientos de la Luna

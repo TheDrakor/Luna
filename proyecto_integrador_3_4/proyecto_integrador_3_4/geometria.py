@@ -6,16 +6,19 @@ import numpy as np
 # Generacion de geometria
 # ============================================================
 def esfera_3d(radio, anillos, segmentos):
-    """Genera vertices, normales y triangulos de una esfera."""
+    """Genera vertices, normales, coordenadas UV y triangulos de una esfera."""
     vertices_originales = []
     normales = []
+    uvs = []
 
-    # Primero calculamos la posicion y la normal de cada vertice
+    # Primero calculamos la posicion, normal y UV de cada vertice
     for anillo in range(anillos + 1):
         phi = (math.pi * anillo) / anillos
+        v = 1.0 - (anillo / anillos)
 
         for segmento in range(segmentos + 1):
             theta = (2 * math.pi * segmento) / segmentos
+            u = segmento / segmentos
 
             # La normal apunta hacia afuera de la esfera
             normal_x = math.sin(phi) * math.cos(theta)
@@ -28,6 +31,7 @@ def esfera_3d(radio, anillos, segmentos):
 
             vertices_originales.append((x, y, z))
             normales.append((normal_x, normal_y, normal_z))
+            uvs.append((u, v))
 
     # Despues conectamos los vertices para construir la malla
     triangulos = []
@@ -42,15 +46,16 @@ def esfera_3d(radio, anillos, segmentos):
             triangulos.append((a, b, d))
             triangulos.append((a, d, c))
 
-    return vertices_originales, normales, triangulos
+    return vertices_originales, normales, uvs, triangulos
 
 
 def preparar_geometria(radio, anillos, segmentos):
     """Convierte la geometria a arreglos compatibles con OpenGL."""
-    vertices, normales, caras = esfera_3d(radio, anillos, segmentos)
+    vertices, normales, uvs, caras = esfera_3d(radio, anillos, segmentos)
 
     vertices_np = np.ascontiguousarray(vertices, dtype=np.float32)
     normales_np = np.ascontiguousarray(normales, dtype=np.float32)
+    uvs_np = np.ascontiguousarray(uvs, dtype=np.float32)
     caras_np = np.ascontiguousarray(caras, dtype=np.uint32)
 
-    return vertices_np, normales_np, caras_np
+    return vertices_np, normales_np, uvs_np, caras_np
