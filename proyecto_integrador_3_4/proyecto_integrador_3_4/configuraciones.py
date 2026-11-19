@@ -1,5 +1,6 @@
 import pygame
 from OpenGL.GL import *
+from pathlib import Path
 
 DIMENSIONES_VENTANA = (1280, 720)
 FPS = 60
@@ -27,7 +28,8 @@ SENSIBILIDAD_ROTACION = 0.5
 
 def cargar_textura(ruta_imagen):
     # Cargar imagen y voltear en Y para coincidir con el origen (0,0) inferior izquierdo de OpenGL
-    superficie = pygame.image.load("C:\Users\chimi\OneDrive\Desktop\Vscode_Projets\proyecto_integrador_3_4\proyecto_integrador_3_4")
+    ruta_textura = Path(__file__).resolve().parent / ruta_imagen
+    superficie = pygame.image.load(str(ruta_textura))
     imagen_bytes = pygame.image.tostring(superficie, "RGBA", True)
     ancho, alto = superficie.get_size()
 

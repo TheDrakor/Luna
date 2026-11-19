@@ -18,7 +18,7 @@ def main():
     pygame.display.set_caption("Luna 3D - Solido e iluminacion")
     render.configurar_opengl()
 
-    textura_luna = render.cargar_textura("luna.jpg")
+    textura_luna = render.cargar_textura("moon_texture.jpg")
 
     # Creamos por separado la geometria de la Luna y del Sol
     vertices_luna, normales_luna, uvs_luna, caras_luna = preparar_geometria(

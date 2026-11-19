@@ -4,11 +4,13 @@ import pygame
 from OpenGL.GL import *
 from OpenGL.GLU import *
 import configuraciones as config
-
+from pathlib import Path
 
 def cargar_textura(ruta_imagen):
     """Carga una imagen con Pygame y la sube como textura 2D a OpenGL."""
-    superficie = pygame.image.load(ruta_imagen)
+    ruta_completa = Path(__file__).resolve().parent / ruta_imagen
+
+    superficie = pygame.image.load(str(ruta_completa))
     imagen_bytes = pygame.image.tostring(superficie, "RGBA", True)
     ancho, alto = superficie.get_size()
 
