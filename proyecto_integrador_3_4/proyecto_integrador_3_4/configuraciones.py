@@ -27,7 +27,7 @@ SENSIBILIDAD_ROTACION = 0.5
 
 def cargar_textura(ruta_imagen):
     # Cargar imagen y voltear en Y para coincidir con el origen (0,0) inferior izquierdo de OpenGL
-    superficie = pygame.image.load("C:\Users\chimi\OneDrive\Desktop\Vscode_Projets\proyecto_integrador_3_4\proyecto_integrador_3_4")
+    superficie = pygame.image.load("C:\chimi\OneDrive\Desktop\Vscode_Projets\proyecto_integrador_3_4\proyecto_integrador_3_4/moon_texture.jpg")
     imagen_bytes = pygame.image.tostring(superficie, "RGBA", True)
     ancho, alto = superficie.get_size()
 
