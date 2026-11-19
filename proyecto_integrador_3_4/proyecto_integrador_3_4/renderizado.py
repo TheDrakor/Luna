@@ -94,14 +94,7 @@ def dibujar_luna(vertices_np, normales_np, uvs_np, caras_np, textura_id):
     dibujar_esfera_buffer(vertices_np, normales_np, caras_np, uvs_np)
     glBindTexture(GL_TEXTURE_2D, 0)
 
-    # Segunda pasada: lineas oscuras sobre la superficie (sin textura)
-    glDisable(GL_TEXTURE_2D)
-    glDisable(GL_LIGHTING)
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
-    glEnable(GL_POLYGON_OFFSET_LINE)
-    glPolygonOffset(-1.0, -1.0)
 
-    glLineWidth(1.0)
     glColor3f(0.15, 0.15, 0.2)
     dibujar_esfera_buffer(vertices_np, normales_np, caras_np)
 
