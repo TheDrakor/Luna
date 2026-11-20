@@ -7,7 +7,9 @@ FPS = 60
 
 # Resolucion de la geometria
 RADIO_LUNA = 1.5
+#32
 ANILLOS_LUNA = 32
+#64
 SEGMENTOS_LUNA = 64
 
 RADIO_SOL = 0.15
