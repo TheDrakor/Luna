@@ -85,34 +85,28 @@ def dibujar_esfera_buffer(vertices_np, normales_np, caras_np, uvs_np=None):
 
 
 def dibujar_luna(vertices_np, normales_np, uvs_np, caras_np, textura_id):
-    """Dibuja la superficie texturizada e iluminada y despues su malla visible."""
-    # Primera pasada: superficie rellena con textura e iluminacion
+    """Dibuja la superficie texturizada e iluminada de la Luna."""
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
     glEnable(GL_TEXTURE_2D)
     glBindTexture(GL_TEXTURE_2D, textura_id)
     glColor3f(1.0, 1.0, 1.0)
     dibujar_esfera_buffer(vertices_np, normales_np, caras_np, uvs_np)
     glBindTexture(GL_TEXTURE_2D, 0)
-
-    glColor3f(0.15, 0.15, 0.2)
-    dibujar_esfera_buffer(vertices_np, normales_np, caras_np)
-
-    # Restauramos los estados que necesita el resto de la escena
-    glDisable(GL_POLYGON_OFFSET_LINE)
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
-    glEnable(GL_LIGHTING)
+    glDisable(GL_TEXTURE_2D)
 
 
-def dibujar_sol(vertices_np, normales_np, caras_np):
-    """Muestra una esfera amarilla en la posicion de la luz."""
+def dibujar_sol(vertices_np, normales_np, uvs_np, caras_np, textura_id):
+    """Dibuja el Sol texturizado sin que le afecte la sombra de la luz."""
     glPushMatrix()
     glTranslatef(*config.POSICION_LUZ)
 
-    # Dibujamos el indicador del Sol sin textura ni iluminacion
-    glDisable(GL_TEXTURE_2D)
     glDisable(GL_LIGHTING)
-    glColor3f(1.0, 0.9, 0.2)
-    dibujar_esfera_buffer(vertices_np, normales_np, caras_np)
+    glEnable(GL_TEXTURE_2D)
+    glBindTexture(GL_TEXTURE_2D, textura_id)
+    glColor3f(1.0, 1.0, 1.0)
+    dibujar_esfera_buffer(vertices_np, normales_np, caras_np, uvs_np)
+    glBindTexture(GL_TEXTURE_2D, 0)
+    glDisable(GL_TEXTURE_2D)
     glEnable(GL_LIGHTING)
 
     glPopMatrix()
