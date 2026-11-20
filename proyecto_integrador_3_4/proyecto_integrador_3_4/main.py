@@ -19,6 +19,7 @@ def main():
 
     # C:\Users\lata_\OneDrive\Pictures\Camera Roll 1
     textura_luna = render.cargar_textura("moon_texture.jpg")
+    textura_sol = render.cargar_textura("sol_texture.jpg")
 
     # Creamos por separado la geometria de la Luna y del Sol
     vertices_luna, normales_luna, uvs_luna, caras_luna = preparar_geometria(

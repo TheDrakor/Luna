@@ -39,8 +39,16 @@ def cargar_textura(ruta_imagen):
     glBindTexture(GL_TEXTURE_2D, textura_id)
 
     # Configurar wrapping (repetición en U y V) y filtrado suave
+    
+    # T y S vendrian siendo las coordenadas U y V
+    # GL_TEXTURE_2D: Configurando una textura bidimensional plana
+    # GL_REPEAT: Pega perfectamente con el inicio del lado izquierdo del objeto
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+   
+    """Define cuando la esfera se ve lejos o pequeña en pantalla,
+    por lo que varios texeles deben comprimirse en un solo píxel, GL_LINEAR nos sirve para suavizar
+    los pixeles vecinos cuando se aumente o disminuye el tamaño"""
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
 
