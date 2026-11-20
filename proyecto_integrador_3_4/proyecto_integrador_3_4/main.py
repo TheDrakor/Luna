@@ -9,6 +9,7 @@ from transformaciones import aplicar_transformaciones
 import renderizado as render
 import controles
 
+
 # Programa principal
 # ============================================================
 def main():
@@ -17,7 +18,6 @@ def main():
     pygame.display.set_caption("Luna 3D - Solido e iluminacion")
     render.configurar_opengl()
 
-    # C:\Users\lata_\OneDrive\Pictures\Camera Roll 1
     textura_luna = render.cargar_textura("moon_texture.jpg")
     textura_sol = render.cargar_textura("sol_texture.jpg")
 
