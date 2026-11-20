@@ -94,7 +94,6 @@ def dibujar_luna(vertices_np, normales_np, uvs_np, caras_np, textura_id):
     dibujar_esfera_buffer(vertices_np, normales_np, caras_np, uvs_np)
     glBindTexture(GL_TEXTURE_2D, 0)
 
-
     glColor3f(0.15, 0.15, 0.2)
     dibujar_esfera_buffer(vertices_np, normales_np, caras_np)
 
