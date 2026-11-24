@@ -19,7 +19,7 @@ def generar_estrellas(cantidad=5000, radio=45.0, semilla=42):
     posiciones = np.column_stack((x, y, z)).astype(np.float32)
 
     # Tonos entre blanco cálido y blanco azulado con distinto brillo
-    brillos = rng.uniform(0.45, 1.0, (cantidad, 1)).astype(np.float32)
+    brillos = rng.uniform(0.80, 1.0, (cantidad, 1)).astype(np.float32)
     colores = np.hstack(
         (brillos, brillos, np.clip(brillos * 1.12, 0.0, 1.0))
     ).astype(np.float32)
