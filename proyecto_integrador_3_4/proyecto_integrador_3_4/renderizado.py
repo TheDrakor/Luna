@@ -36,7 +36,7 @@ def configurar_opengl():
     glLoadIdentity()
 
     relacion_aspecto = config.DIMENSIONES_VENTANA[0] / config.DIMENSIONES_VENTANA[1]
-    gluPerspective(45, relacion_aspecto, 0.1, 20.0)
+    gluPerspective(45, relacion_aspecto, 0.1, 100.0)
 
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()

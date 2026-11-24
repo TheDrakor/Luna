@@ -8,6 +8,7 @@ from geometria import preparar_geometria
 from transformaciones import aplicar_transformaciones
 import renderizado as render
 import controles 
+import espacio
 
 
 # Programa principal
@@ -46,6 +47,12 @@ def main():
 
     reloj = pygame.time.Clock()
     ejecutando = True
+    
+    # Solo estrellas procedurales (no requiere imagen)
+    pos_estrellas, col_estrellas = espacio.generar_estrellas(cantidad=1200, radio=45.0)
+
+    # (Opcional) Si también tienes una imagen de nebulosa / Vía Láctea:
+    # v_cielo, n_cielo, uvs_cielo, c_cielo, tex_cielo = espacio.preparar_skydome("espacio_texture.jpg")
 
     # Ciclo principal
     while ejecutando:
@@ -54,9 +61,15 @@ def main():
 
         if not ejecutando:
             break
-
+        
         # Limpiamos el color y la profundidad del fotograma anterior
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+
+        # 1. Primero dibujamos el fondo espacial
+        # espacio.dibujar_skydome(v_cielo, n_cielo, uvs_cielo, c_cielo, tex_cielo)  # Opcional si usas textura
+        espacio.dibujar_estrellas(pos_estrellas, col_estrellas)
+
+        # 2. Después dibujamos la Luna y el Sol como ya lo tenías
 
         # La Luna tiene sus propias transformaciones
         glPushMatrix()
