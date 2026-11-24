@@ -47,6 +47,9 @@ def procesar_eventos(estado_luna, estado_mouse):
                 estado_luna["desplazamiento_z"] += config.PASO_TRASLACION
             elif evento.key == pygame.K_e:
                 estado_luna["desplazamiento_z"] -= config.PASO_TRASLACION
+            # Activar/pausar rotación automática
+            elif evento.key == pygame.K_g:
+                estado_luna["rotacion_automatica"] = not estado_luna["rotacion_automatica"]
 
             # Deformacion por sesgo
             elif evento.key == pygame.K_j:
@@ -68,4 +71,5 @@ def procesar_eventos(estado_luna, estado_mouse):
                 estado_luna["factor_escala"] = 1.0
                 estado_luna["sesgo_x"] = 0.0
                 estado_luna["sesgo_y"] = 0.0
+                estado_luna["rotacion_automatica"] = False
     return True

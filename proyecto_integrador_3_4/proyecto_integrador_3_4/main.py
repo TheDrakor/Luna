@@ -41,6 +41,7 @@ def main():
         "factor_escala": 1.0,
         "sesgo_x": 0.0,
         "sesgo_y": 0.0,
+        "rotacion_automatica": False,
     }
 
     estado_mouse = {"presionado": False, "posicion_anterior": (0, 0)}
@@ -54,6 +55,7 @@ def main():
     # (Opcional) Si también tienes una imagen de nebulosa / Vía Láctea:
     # v_cielo, n_cielo, uvs_cielo, c_cielo, tex_cielo = espacio.preparar_skydome("espacio_texture.jpg")
 
+    rotacion_sol_y = 0.0
     # Ciclo principal
     while ejecutando:
 
@@ -61,6 +63,11 @@ def main():
 
         if not ejecutando:
             break
+        
+        if estado_luna["rotacion_automatica"]:
+            estado_luna["rotacion_y"] = (
+                estado_luna["rotacion_y"] + config.VELOCIDAD_ROTACION_AUTO
+            ) % 360.0    
         
         # Limpiamos el color y la profundidad del fotograma anterior
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -89,9 +96,15 @@ def main():
         glPopMatrix()
 
         # El Sol se dibuja aparte y no sigue los movimientos de la Luna
+        
+        rotacion_sol_y = (rotacion_sol_y + config.VELOCIDAD_ROTACION_SOL) % 360.0
 
-        render.dibujar_sol(vertices_sol, normales_sol, uvs_sol, caras_sol, textura_sol)
+        # ... dibujo de la Luna ...
 
+        # Dibujamos el Sol pasándole su rotación actual
+        render.dibujar_sol(
+            vertices_sol, normales_sol, uvs_sol, caras_sol, textura_sol, rotacion_sol_y)
+        
         pygame.display.flip()
         reloj.tick(config.FPS)
 
