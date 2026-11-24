@@ -7,7 +7,7 @@ import configuraciones as config
 from geometria import preparar_geometria
 from transformaciones import aplicar_transformaciones
 import renderizado as render
-import controles
+import controles 
 
 
 # Programa principal
@@ -25,7 +25,8 @@ def main():
     vertices_luna, normales_luna, uvs_luna, caras_luna = preparar_geometria(
         config.RADIO_LUNA, config.ANILLOS_LUNA, config.SEGMENTOS_LUNA
     )
-    vertices_sol, normales_sol, _, caras_sol = preparar_geometria(
+    # 1. Al crear la geometría del Sol, guarda uvs_sol en lugar de usar "_"
+    vertices_sol, normales_sol, uvs_sol, caras_sol = preparar_geometria(
         config.RADIO_SOL, config.ANILLOS_SOL, config.SEGMENTOS_SOL
     )
 
@@ -75,7 +76,8 @@ def main():
         glPopMatrix()
 
         # El Sol se dibuja aparte y no sigue los movimientos de la Luna
-        render.dibujar_sol(vertices_sol, normales_sol, caras_sol)
+
+        render.dibujar_sol(vertices_sol, normales_sol, uvs_sol, caras_sol, textura_sol)
 
         pygame.display.flip()
         reloj.tick(config.FPS)

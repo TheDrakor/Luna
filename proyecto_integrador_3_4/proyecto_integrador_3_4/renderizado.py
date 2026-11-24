@@ -103,16 +103,21 @@ def dibujar_luna(vertices_np, normales_np, uvs_np, caras_np, textura_id):
     glEnable(GL_LIGHTING)
 
 
-def dibujar_sol(vertices_np, normales_np, caras_np):
-    """Muestra una esfera amarilla en la posicion de la luz."""
+def dibujar_sol(vertices_np, normales_np, uvs_np, caras_np, textura_id):
+    """Dibuja el Sol con su textura en la posicion de la luz."""
     glPushMatrix()
     glTranslatef(*config.POSICION_LUZ)
 
-    # Dibujamos el indicador del Sol sin textura ni iluminacion
-    glDisable(GL_TEXTURE_2D)
+    # Desactivamos la iluminacion para que el Sol emita su propio brillo sin sombras
     glDisable(GL_LIGHTING)
-    glColor3f(10, 10, 10)
-    dibujar_esfera_buffer(vertices_np, normales_np, caras_np)
+    glEnable(GL_TEXTURE_2D)
+    glBindTexture(GL_TEXTURE_2D, textura_id)
+    glColor3f(1.0, 1.0, 1.0)
+
+    dibujar_esfera_buffer(vertices_np, normales_np, caras_np, uvs_np)
+
+    glBindTexture(GL_TEXTURE_2D, 0)
+    glDisable(GL_TEXTURE_2D)
     glEnable(GL_LIGHTING)
 
     glPopMatrix()

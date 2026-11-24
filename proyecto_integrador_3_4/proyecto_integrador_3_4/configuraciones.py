@@ -16,7 +16,7 @@ SEGMENTOS_SOL = 32
 
 # Posicion inicial de la Luna y de la fuente de luz
 POSICION_INICIAL_Z = -5.0
-POSICION_LUZ = (1.40, 0.80, -2.0)
+POSICION_LUZ = (1.0, 0.25, -2.0)
 
 # Sensibilidad de los controles
 PASO_TRASLACION = 0.2
