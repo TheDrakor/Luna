@@ -19,10 +19,11 @@ def main():
     pygame.display.set_caption("Luna 3D - Solido e iluminacion")
     render.configurar_opengl()
 
+    # [TEXTURAS] Carga de imágenes de superficie para la Luna y el Sol en la GPU
     textura_luna = render.cargar_textura("moon_texture.jpg")
     textura_sol = render.cargar_textura("sol_texture.jpg")
 
-    # Creamos por separado la geometria de la Luna y del Sol
+    # [GEOMETRÍA] Creación por separado de vértices, normales, UVs y caras de la Luna y del Sol
     vertices_luna, normales_luna, uvs_luna, caras_luna = preparar_geometria(
         config.RADIO_LUNA, config.ANILLOS_LUNA, config.SEGMENTOS_LUNA
     )
@@ -31,7 +32,7 @@ def main():
         config.RADIO_SOL, config.ANILLOS_SOL, config.SEGMENTOS_SOL
     )
 
-    # Estado inicial de la Luna
+    # [TRANSFORMACIONES] Estado inicial de posición, rotación, escala y sesgo de la Luna
     estado_luna = {
         "desplazamiento_x": 0.0,
         "desplazamiento_y": 0.0,
@@ -49,7 +50,7 @@ def main():
     reloj = pygame.time.Clock()
     ejecutando = True
     
-    # Solo estrellas procedurales (no requiere imagen)
+    # [GEOMETRÍA Y COLOR] Generación de estrellas procedurales en el fondo (no requiere imagen)
     pos_estrellas, col_estrellas = espacio.generar_estrellas(cantidad=1200, radio=45.0)
 
     # (Opcional) Si también tienes una imagen de nebulosa / Vía Láctea:
@@ -64,6 +65,7 @@ def main():
         if not ejecutando:
             break
         
+        # [TRANSFORMACIÓN - ROTACIÓN AUTOMÁTICA LUNA] Acumula ángulo en Y cuando está activa
         if estado_luna["rotacion_automatica"]:
             estado_luna["rotacion_y"] = (
                 estado_luna["rotacion_y"] + config.VELOCIDAD_ROTACION_AUTO
@@ -72,13 +74,12 @@ def main():
         # Limpiamos el color y la profundidad del fotograma anterior
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-        # 1. Primero dibujamos el fondo espacial
+        # 1. [FONDO ESPACIAL - COLOR Y GEOMETRÍA] Primero dibujamos el fondo de estrellas
         # espacio.dibujar_skydome(v_cielo, n_cielo, uvs_cielo, c_cielo, tex_cielo)  # Opcional si usas textura
         espacio.dibujar_estrellas(pos_estrellas, col_estrellas)
 
-        # 2. Después dibujamos la Luna y el Sol como ya lo tenías
-
-        # La Luna tiene sus propias transformaciones
+        # 2. [TRANSFORMACIONES, TEXTURA E ILUMINACIÓN DE LA LUNA]
+        # glPushMatrix / glPopMatrix aíslan la matriz de la Luna para no afectar al Sol
         glPushMatrix()
         aplicar_transformaciones(
             (
@@ -95,8 +96,8 @@ def main():
         )
         glPopMatrix()
 
-        # El Sol se dibuja aparte y no sigue los movimientos de la Luna
-        
+        # 3. [TRANSFORMACIÓN, TEXTURA E ILUMINACIÓN DEL SOL]
+        # El Sol se dibuja aparte con rotación continua propia sin seguir los movimientos de la Luna
         rotacion_sol_y = (rotacion_sol_y + config.VELOCIDAD_ROTACION_SOL) % 360.0
 
         # ... dibujo de la Luna ...

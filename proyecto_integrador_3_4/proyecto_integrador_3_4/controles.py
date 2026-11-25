@@ -4,11 +4,15 @@ import pygame
 import configuraciones as config
 
 
+# ============================================================
+# [INTERACCIÓN] Mapeo de eventos a parámetros de transformación
+# ============================================================
 def procesar_eventos(estado_luna, estado_mouse):
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             return False
 
+        # [TRANSFORMACIÓN - ESCALA] Rueda del ratón aumenta o reduce factor_escala
         elif evento.type == pygame.MOUSEBUTTONDOWN:
             if evento.button == 1:
                 estado_mouse["presionado"] = True
@@ -24,6 +28,7 @@ def procesar_eventos(estado_luna, estado_mouse):
             if evento.button == 1:
                 estado_mouse["presionado"] = False
 
+        # [TRANSFORMACIÓN - ROTACIÓN MANUAL] Arrastre con botón izquierdo gira en ejes X e Y
         elif evento.type == pygame.MOUSEMOTION:
             if estado_mouse["presionado"]:
                 x, y = evento.pos
@@ -34,7 +39,7 @@ def procesar_eventos(estado_luna, estado_mouse):
                 estado_mouse["posicion_anterior"] = (x, y)
 
         elif evento.type == pygame.KEYDOWN:
-            # Movimiento en los tres ejes
+            # [TRANSFORMACIÓN - TRASLACIÓN] Desplazamiento en los tres ejes (A/D: X, W/S: Y, Q/E: Z)
             if evento.key == pygame.K_a:
                 estado_luna["desplazamiento_x"] -= config.PASO_TRASLACION
             elif evento.key == pygame.K_d:
@@ -47,11 +52,11 @@ def procesar_eventos(estado_luna, estado_mouse):
                 estado_luna["desplazamiento_z"] += config.PASO_TRASLACION
             elif evento.key == pygame.K_e:
                 estado_luna["desplazamiento_z"] -= config.PASO_TRASLACION
-            # Activar/pausar rotación automática
+            # [TRANSFORMACIÓN - ROTACIÓN AUTOMÁTICA] Activa o pausa el giro continuo con tecla G
             elif evento.key == pygame.K_g:
                 estado_luna["rotacion_automatica"] = not estado_luna["rotacion_automatica"]
 
-            # Deformacion por sesgo
+            # [TRANSFORMACIÓN - SESGO / SHEAR] Deformación sobre ejes X e Y (teclas I, J, K, L)
             elif evento.key == pygame.K_j:
                 estado_luna["sesgo_x"] -= config.PASO_SESGO
             elif evento.key == pygame.K_l:
@@ -61,7 +66,7 @@ def procesar_eventos(estado_luna, estado_mouse):
             elif evento.key == pygame.K_k:
                 estado_luna["sesgo_y"] -= config.PASO_SESGO
 
-            # Regresamos a los valores iniciales
+            # [REINICIO] Regresa todas las transformaciones a sus valores iniciales con tecla R
             elif evento.key == pygame.K_r:
                 estado_luna["desplazamiento_x"] = 0.0
                 estado_luna["desplazamiento_y"] = 0.0

@@ -6,6 +6,9 @@ from geometria import preparar_geometria
 import renderizado as render
 
 
+# ============================================================
+# [GEOMETRÍA Y COLOR - FONDO ESPACIAL] Campo de estrellas 3D
+# ============================================================
 def generar_estrellas(cantidad=5000, radio=45.0, semilla=42):
     """Genera posiciones 3D y colores aleatorios en una esfera lejana."""
     rng = np.random.default_rng(semilla)
@@ -13,12 +16,13 @@ def generar_estrellas(cantidad=5000, radio=45.0, semilla=42):
     cos_phi = rng.uniform(-1.0, 1.0, cantidad)
     sin_phi = np.sqrt(1.0 - cos_phi ** 2)
 
+    # [GEOMETRÍA] Coordenadas esféricas distribuidas sobre una esfera envolvente de radio 45
     x = radio * sin_phi * np.cos(theta)
     y = radio * cos_phi
     z = radio * sin_phi * np.sin(theta)
     posiciones = np.column_stack((x, y, z)).astype(np.float32)
 
-    # Tonos entre blanco cálido y blanco azulado con distinto brillo
+    # [COLOR] Tonos entre blanco cálido y blanco azulado con distinto brillo por estrella
     brillos = rng.uniform(0.80, 1.0, (cantidad, 1)).astype(np.float32)
     colores = np.hstack(
         (brillos, brillos, np.clip(brillos * 1.12, 0.0, 1.0))
@@ -29,12 +33,14 @@ def generar_estrellas(cantidad=5000, radio=45.0, semilla=42):
 
 def dibujar_estrellas(posiciones_np, colores_np, tamano=2.0):
     """Dibuja las estrellas al fondo sin afectar profundidad ni iluminación."""
+    # [ILUMINACIÓN Y PROFUNDIDAD] Desactiva luces, texturas y escritura en Z-buffer para quedar al fondo
     glPushAttrib(GL_ENABLE_BIT | GL_POINT_BIT | GL_DEPTH_BUFFER_BIT)
     glDisable(GL_LIGHTING)
     glDisable(GL_TEXTURE_2D)
     glDepthMask(GL_FALSE)
     glPointSize(tamano)
 
+    # [GEOMETRÍA Y COLOR POR VÉRTICE] Enlaza arreglos de posiciones y colores RGB por cada punto
     glEnableClientState(GL_VERTEX_ARRAY)
     glEnableClientState(GL_COLOR_ARRAY)
 
@@ -47,6 +53,9 @@ def dibujar_estrellas(posiciones_np, colores_np, tamano=2.0):
     glPopAttrib()
 
 
+# ============================================================
+# [TEXTURAS - SKYDOME] Esfera envolvente opcional para nebulosas
+# ============================================================
 def preparar_skydome(ruta_textura, radio=50.0, anillos=32, segmentos=64):
     """Crea la esfera envolvente y carga la textura del fondo espacial."""
     textura_id = render.cargar_textura(ruta_textura)

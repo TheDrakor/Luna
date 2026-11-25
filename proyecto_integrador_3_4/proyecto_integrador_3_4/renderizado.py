@@ -52,6 +52,7 @@ def configurar_opengl():
     glShadeModel(GL_SMOOTH)
 
     # Configuracion de texturas 2D moduladas con la luz
+    # [TEXTURAS] Combina imagen 2D con la iluminación (GL_MODULATE)
     glEnable(GL_TEXTURE_2D)
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE)
 
@@ -71,6 +72,7 @@ def dibujar_esfera_buffer(vertices_np, normales_np, caras_np, uvs_np=None):
     glVertexPointer(3, GL_FLOAT, 0, vertices_np)
     glNormalPointer(GL_FLOAT, 0, normales_np)
 
+    # [TEXTURAS - MAPEO UV] Asocia coordenadas (u, v) de la imagen a cada vértice
     if uvs_np is not None:
         glEnableClientState(GL_TEXTURE_COORD_ARRAY)
         glTexCoordPointer(2, GL_FLOAT, 0, uvs_np)
@@ -90,6 +92,8 @@ def dibujar_luna(vertices_np, normales_np, uvs_np, caras_np, textura_id):
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
     glEnable(GL_TEXTURE_2D)
     glBindTexture(GL_TEXTURE_2D, textura_id)
+    
+    # [COLOR Y TEXTURA] Blanco neutro para no alterar los colores de la textura
     glColor3f(1.0, 1.0, 1.0)
     dibujar_esfera_buffer(vertices_np, normales_np, caras_np, uvs_np)
     glBindTexture(GL_TEXTURE_2D, 0)
@@ -109,6 +113,7 @@ def dibujar_sol(vertices_np, normales_np, uvs_np, caras_np, textura_id, rotacion
     glTranslatef(*config.POSICION_LUZ)
     glRotatef(rotacion_y, 0.0, 1.0, 0.0)  # Rota sobre su propio eje Y
 
+    # [ILUMINACIÓN] Desactiva luz para que el Sol tenga brillo propio sin auto-sombras
     glDisable(GL_LIGHTING)
     glEnable(GL_TEXTURE_2D)
     glBindTexture(GL_TEXTURE_2D, textura_id)
@@ -116,6 +121,8 @@ def dibujar_sol(vertices_np, normales_np, uvs_np, caras_np, textura_id, rotacion
     dibujar_esfera_buffer(vertices_np, normales_np, caras_np, uvs_np)
     glBindTexture(GL_TEXTURE_2D, 0)
     glDisable(GL_TEXTURE_2D)
+    
+    # [ILUMINACIÓN Y COLOR] Activa luz puntual, material por color y sombreado suave
     glEnable(GL_LIGHTING)
 
     glPopMatrix()

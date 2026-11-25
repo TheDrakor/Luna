@@ -3,15 +3,20 @@
 import math
 import numpy as np
 
-# Generacion de geometria
+# ============================================================
+# [GEOMETRÍA] Generación paramétrica de la malla esférica 3D
 # ============================================================
 def esfera_3d(radio, anillos, segmentos):
-    """Genera vertices, normales, coordenadas UV y triangulos de una esfera."""
+    """
+    Genera vertices, normales, coordenadas UV y triangulos de una esfera:
+    - phi (0 a pi): ángulo vertical de polo a polo (latitud).
+    - theta (0 a 2*pi): ángulo horizontal alrededor del eje Y (longitud).
+    """
     vertices_originales = []
     normales = []
     uvs = []
 
-    # Primero calculamos la posicion, normal y UV de cada vertice
+    # [GEOMETRÍA - ATRIBUTOS POR VÉRTICE] Posición 3D, vector normal (luz) y coordenadas UV (textura)
     for anillo in range(anillos + 1):
         phi = (math.pi * anillo) / anillos
         v = 1.0 - (anillo / anillos)
@@ -20,11 +25,12 @@ def esfera_3d(radio, anillos, segmentos):
             theta = (2 * math.pi * segmento) / segmentos
             u = segmento / segmentos
 
-            # La normal apunta hacia afuera de la esfera
+            # Vector normal unitario perpendicular a la superficie (clave para calcular la iluminación)
             normal_x = math.sin(phi) * math.cos(theta)
             normal_y = math.cos(phi)
             normal_z = math.sin(phi) * math.sin(theta)
 
+            # Posición (x, y, z) del vértice en el espacio local del objeto
             x = radio * normal_x
             y = radio * normal_y
             z = radio * normal_z
@@ -33,7 +39,7 @@ def esfera_3d(radio, anillos, segmentos):
             normales.append((normal_x, normal_y, normal_z))
             uvs.append((u, v))
 
-    # Despues conectamos los vertices para construir la malla
+    # [GEOMETRÍA - TOPOLOGÍA] Conectividad de vértices para formar triángulos en sentido antihorario
     triangulos = []
 
     for anillo in range(anillos):
@@ -50,7 +56,7 @@ def esfera_3d(radio, anillos, segmentos):
 
 
 def preparar_geometria(radio, anillos, segmentos):
-    """Convierte la geometria a arreglos compatibles con OpenGL."""
+    """[GEOMETRÍA - BUFFERS] Convierte las listas a arreglos contiguos de NumPy compatibles con OpenGL."""
     vertices, normales, uvs, caras = esfera_3d(radio, anillos, segmentos)
 
     vertices_np = np.ascontiguousarray(vertices, dtype=np.float32)
