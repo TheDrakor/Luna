@@ -57,7 +57,7 @@ def configurar_opengl():
 
     # Registramos la fuente de luz antes de transformar la Luna
     glLightfv(GL_LIGHT0, GL_POSITION, [*config.POSICION_LUZ, 1.0])
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, [1.0, 1.0, 0.95, 1.0])
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, [20.0, 20.0, 20.95, 20.0])
     glLightfv(GL_LIGHT0, GL_AMBIENT, [0.08, 0.08, 0.1, 1.0])
 
 

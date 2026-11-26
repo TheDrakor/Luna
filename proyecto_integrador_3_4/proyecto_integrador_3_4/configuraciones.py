@@ -16,7 +16,8 @@ SEGMENTOS_SOL = 32
 
 # [TRANSFORMACIONES E ILUMINACIÓN] Posición inicial en el espacio 3D y coordenadas de la luz puntual
 POSICION_INICIAL_Z = -5.0
-POSICION_LUZ = (1.0, 0.25, -2.0)
+#              (  x,    y,   z )
+POSICION_LUZ = (1.50, 0.25, -3.0)
 
 # Sensibilidad y velocidades para las transformaciones interactivas y automáticas
 PASO_TRASLACION = 0.2
