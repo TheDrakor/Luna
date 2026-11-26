@@ -11,9 +11,8 @@ def cargar_textura(ruta_imagen):
     ruta_completa = Path(__file__).resolve().parent / ruta_imagen
 
     superficie = pygame.image.load(str(ruta_completa))
-    imagen_bytes = pygame.image.tostring(superficie, "RGBA", True)
+    imagen_bytes = pygame.image.tostring(superficie, "RGBA", False)
     ancho, alto = superficie.get_size()
-
     textura_id = glGenTextures(1)
     glBindTexture(GL_TEXTURE_2D, textura_id)
 
@@ -73,6 +72,7 @@ def dibujar_esfera_buffer(vertices_np, normales_np, caras_np, uvs_np=None):
     glNormalPointer(GL_FLOAT, 0, normales_np)
 
     # [TEXTURAS - MAPEO UV] Asocia coordenadas (u, v) de la imagen a cada vértice
+
     if uvs_np is not None:
         glEnableClientState(GL_TEXTURE_COORD_ARRAY)
         glTexCoordPointer(2, GL_FLOAT, 0, uvs_np)
